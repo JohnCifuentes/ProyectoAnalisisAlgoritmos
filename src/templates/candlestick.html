@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block title %}Candlestick OHLC{% endblock %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block content %}
+<!-- ── Cabecera ─────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="page-header__left">
+    <h1 class="page-header__title">Candlestick OHLC</h1>
+    <p class="page-header__desc">
+      Precios OHLC con SMAs calculadas manualmente (ventana deslizante — Req. #2).
+    </p>
+  </div>
+  <div class="page-header__right">
+    <a href="{{ url_for('visualization.visualizations_view') }}" class="btn btn--ghost">
+      ← Visualizaciones
+    </a>
+  </div>
+</div>
+
+<!-- ── Panel de controles ───────────────────────────────────────── -->
+<div class="card controls-card">
+  <div class="controls-row">
+
+    <!-- Selector de ticker -->
+    <div class="control-group">
+      <label class="control-label" for="ticker-select">Activo</label>
+      <select class="form-select" id="ticker-select">
+        <option value="">Cargando…</option>
+      </select>
+    </div>
+
+    <!-- Selector de período -->
+    <div class="control-group">
+      <label class="control-label">Período</label>
+      <div class="btn-group" id="period-group">
+        <button class="btn btn--outline btn--sm period-btn" data-period="1m">1M</button>
+        <button class="btn btn--outline btn--sm period-btn" data-period="3m">3M</button>
+        <button class="btn btn--outline btn--sm period-btn" data-period="6m">6M</button>
+        <button class="btn btn--outline btn--sm period-btn period-btn--active" data-period="1y">1A</button>
+        <button class="btn btn--outline btn--sm period-btn" data-period="3y">3A</button>
+        <button class="btn btn--outline btn--sm period-btn" data-period="all">Todo</button>
+      </div>
+    </div>
+
+    <!-- Checkboxes de SMA -->
+    <div class="control-group">
+      <label class="control-label">Medias Móviles (SMA)</label>
+      <div class="checkbox-row">
+        <label class="checkbox-label checkbox-label--sma20">
+          <input type="checkbox" id="sma-20" value="20" checked />
+          SMA 20
+        </label>
+        <label class="checkbox-label checkbox-label--sma50">
+          <input type="checkbox" id="sma-50" value="50" checked />
+          SMA 50
+        </label>
+        <label class="checkbox-label checkbox-label--sma100">
+          <input type="checkbox" id="sma-100" value="100" />
+          SMA 100
+        </label>
+        <label class="checkbox-label checkbox-label--sma200">
+          <input type="checkbox" id="sma-200" value="200" />
+          SMA 200
+        </label>
+      </div>
+    </div>
+
+    <!-- Botón de carga -->
+    <div class="control-group control-group--action">
+      <button class="btn btn--primary" id="load-btn" onclick="loadChart()">
+        Cargar
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Estadísticas y SMAs actuales ─────────────────────────────── -->
+<div class="two-col" id="stats-row" style="display:none;">
+
+  <div class="card">
+    <h2 class="card__title" id="stat-name">—</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-label">Precio actual</span>
+        <span class="stat-value stat-value--accent" id="stat-close">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Variación período</span>
+        <span class="stat-value" id="stat-change">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Máximo</span>
+        <span class="stat-value stat-value--green" id="stat-max">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Mínimo</span>
+        <span class="stat-value stat-value--red" id="stat-min">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Velas</span>
+        <span class="stat-value" id="stat-candles">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Período</span>
+        <span class="stat-value" id="stat-dates">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="card__title">Medias Móviles — Valor Actual</h2>
+    <p class="card__desc text-muted">Última vela del período seleccionado.</p>
+    <div class="sma-values" id="sma-values">
+      <p class="text-muted">—</p>
+    </div>
+    <p class="card__desc text-muted" style="margin-top:1rem;">
+      Cálculo manual: ventana deslizante O(n) sin <code>rolling().mean()</code>.
+    </p>
+  </div>
+
+</div>
+
+<!-- ── Gráfico ───────────────────────────────────────────────────── -->
+<div class="card card--full">
+  <div id="candlestick-loading" class="loading-msg" style="display:none;">
+    <span class="spinner"></span> Cargando datos…
+  </div>
+  <div id="candlestick-error" class="alert alert--error" style="display:none;"></div>
+  <div id="candlestick-container" style="min-height:560px;"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/candlestick.js') }}"></script>
+{% endblock %}

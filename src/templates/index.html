@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<!-- ─── HERO ───────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero__content">
+    <h1 class="hero__title">Financial Analytics Dashboard</h1>
+    <p class="hero__subtitle">
+      Análisis cuantitativo de activos financieros usando algoritmos de similitud,
+      volatilidad y detección de patrones de precio.
+    </p>
+    <p class="hero__meta">
+      Universidad del Quindío &nbsp;·&nbsp; Análisis de Algoritmos &nbsp;·&nbsp; 2026
+    </p>
+    <div class="hero__cta">
+      <a href="{{ url_for('dataset.dataset_view') }}" class="btn btn--primary">
+        Ver Dataset
+      </a>
+      <a href="{{ url_for('similarity.similarity_view') }}" class="btn btn--secondary">
+        Comparar Activos
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS BAR ──────────────────────────────────────────────────── -->
+<section class="stats-bar" id="stats-bar">
+  <div class="stat-item">
+    <span class="stat-item__value" id="stat-assets">—</span>
+    <span class="stat-item__label">Activos</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-item__value" id="stat-years">5</span>
+    <span class="stat-item__label">Años de historial</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-item__value" id="stat-records">—</span>
+    <span class="stat-item__label">Registros</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-item__value">4</span>
+    <span class="stat-item__label">Métricas de similitud</span>
+  </div>
+</section>
+
+<!-- ─── FEATURE CARDS ─────────────────────────────────────────────── -->
+<section class="features">
+  <div class="card feature-card">
+    <div class="feature-card__icon">🗄️</div>
+    <h2 class="feature-card__title">Dataset Maestro</h2>
+    <p class="feature-card__desc">
+      Accede a precios OHLCV históricos de 20 activos: acciones, ETFs,
+      criptomonedas y commodities. Filtrado y paginado.
+    </p>
+    <a href="{{ url_for('dataset.dataset_view') }}" class="feature-card__link">
+      Explorar datos →
+    </a>
+  </div>
+
+  <div class="card feature-card">
+    <div class="feature-card__icon">📐</div>
+    <h2 class="feature-card__title">Similitud entre Activos</h2>
+    <p class="feature-card__desc">
+      Compara cualquier par de activos usando Euclidiana, Pearson,
+      Coseno o DTW sobre retornos o precios de cierre.
+    </p>
+    <a href="{{ url_for('similarity.similarity_view') }}" class="feature-card__link">
+      Comparar activos →
+    </a>
+  </div>
+
+  <div class="card feature-card">
+    <div class="feature-card__icon">📊</div>
+    <h2 class="feature-card__title">Volatilidad &amp; Riesgo</h2>
+    <p class="feature-card__desc">
+      Ranking de activos por volatilidad anualizada. Clasificación
+      Conservador / Moderado / Agresivo.
+    </p>
+    <a href="{{ url_for('analytics.analytics_view') }}" class="feature-card__link">
+      Ver analytics →
+    </a>
+  </div>
+
+  <div class="card feature-card">
+    <div class="feature-card__icon">🔍</div>
+    <h2 class="feature-card__title">Patrones de Precio</h2>
+    <p class="feature-card__desc">
+      Detección de ganancias consecutivas y recuperación tras caídas.
+      Frecuencia y conteo por activo.
+    </p>
+    <a href="{{ url_for('patterns.patterns_view') }}" class="feature-card__link">
+      Ver patrones →
+    </a>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/home.js') }}"></script>
+{% endblock %}

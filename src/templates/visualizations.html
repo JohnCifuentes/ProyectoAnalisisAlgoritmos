@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Visualizaciones{% endblock %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block content %}
+<!-- ── Cabecera ─────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="page-header__left">
+    <h1 class="page-header__title">Visualizaciones</h1>
+    <p class="page-header__desc">
+      Panel de herramientas visuales para análisis financiero del portafolio.
+    </p>
+  </div>
+</div>
+
+<!-- ── Tarjetas de navegación ───────────────────────────────────── -->
+<div class="feature-cards">
+
+  <a href="{{ url_for('dashboard.dashboard_view') }}" class="feature-card">
+    <div class="feature-card__icon">🏠</div>
+    <h3 class="feature-card__title">Dashboard</h3>
+    <p class="feature-card__desc">
+      Vista consolidada con KPIs del portafolio, heatmap mini y ranking de riesgo.
+    </p>
+    <span class="feature-card__link">Ir al dashboard →</span>
+  </a>
+
+  <a href="{{ url_for('visualization.heatmap_view') }}" class="feature-card">
+    <div class="feature-card__icon">🌡️</div>
+    <h3 class="feature-card__title">Heatmap de Correlación</h3>
+    <p class="feature-card__desc">
+      Matriz de correlación de Pearson entre los 20 activos, calculada manualmente.
+      190 pares únicos visualizados con escala de color.
+    </p>
+    <span class="feature-card__link">Ver heatmap →</span>
+  </a>
+
+  <a href="{{ url_for('visualization.candlestick_view') }}" class="feature-card">
+    <div class="feature-card__icon">📊</div>
+    <h3 class="feature-card__title">Candlestick OHLC</h3>
+    <p class="feature-card__desc">
+      Gráfico de velas japonesas con SMAs superpuestas.
+      SMA calculada con ventana deslizante manual — sin <code>rolling().mean()</code>.
+    </p>
+    <span class="feature-card__link">Ver candlestick →</span>
+  </a>
+
+</div>
+
+<!-- ── Resumen de correlaciones ─────────────────────────────────── -->
+<div class="two-col">
+
+  <div class="card">
+    <h2 class="card__title">Correlaciones Destacadas</h2>
+    <p class="card__desc text-muted">
+      Extremos de la matriz de Pearson.
+    </p>
+
+    <div id="viz-corr-loading" class="loading-msg">
+      <span class="spinner"></span> Calculando…
+    </div>
+    <div id="viz-corr-error" class="alert alert--error" style="display:none;"></div>
+
+    <div id="viz-corr-summary" style="display:none;">
+      <div class="stat-item" style="margin-bottom:1rem;">
+        <span class="stat-label">Par más correlacionado</span>
+        <span class="stat-value stat-value--accent" id="viz-top-pair">—</span>
+        <span class="stat-sub" id="viz-top-val">—</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Par menos correlacionado</span>
+        <span class="stat-value" id="viz-bottom-pair">—</span>
+        <span class="stat-sub" id="viz-bottom-val">—</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 class="card__title">Top 5 Correlaciones Positivas</h2>
+    <table class="data-table" id="viz-top-table">
+      <thead>
+        <tr>
+          <th>Par de activos</th>
+          <th class="text-right">r de Pearson</th>
+        </tr>
+      </thead>
+      <tbody id="viz-top-tbody">
+        <tr><td colspan="2" class="text-muted text-center">Calculando…</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/visualizations.js') }}"></script>
+{% endblock %}

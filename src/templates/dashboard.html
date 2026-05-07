@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+{% endblock %}
+
+{% block content %}
+<!-- ── Cabecera ─────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="page-header__left">
+    <h1 class="page-header__title">Dashboard Financiero</h1>
+    <p class="page-header__desc">
+      Vista consolidada del portafolio de 20 activos — 5 años de datos históricos.
+    </p>
+  </div>
+  <div class="page-header__right">
+    <span class="badge badge--info" id="dash-period">2021 – 2026</span>
+  </div>
+</div>
+
+<!-- ── KPI Cards ────────────────────────────────────────────────── -->
+<div class="kpi-grid" id="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-card__icon">🗄️</div>
+    <div class="kpi-card__value" id="kpi-assets">—</div>
+    <div class="kpi-card__label">Activos</div>
+    <div class="kpi-card__sub" id="kpi-records">— registros</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-card__icon">📊</div>
+    <div class="kpi-card__value" id="kpi-avg-vol">—</div>
+    <div class="kpi-card__label">Vol. Promedio</div>
+    <div class="kpi-card__sub">Anualizada (portafolio)</div>
+  </div>
+
+  <div class="kpi-card kpi-card--aggressive">
+    <div class="kpi-card__icon">🔴</div>
+    <div class="kpi-card__value" id="kpi-most-aggressive">—</div>
+    <div class="kpi-card__label">Más Riesgoso</div>
+    <div class="kpi-card__sub" id="kpi-aggressive-vol">—</div>
+  </div>
+
+  <div class="kpi-card kpi-card--conservative">
+    <div class="kpi-card__icon">🟢</div>
+    <div class="kpi-card__value" id="kpi-most-conservative">—</div>
+    <div class="kpi-card__label">Más Conservador</div>
+    <div class="kpi-card__sub" id="kpi-conservative-vol">—</div>
+  </div>
+
+  <div class="kpi-card kpi-card--accent">
+    <div class="kpi-card__icon">📐</div>
+    <div class="kpi-card__value" id="kpi-top-corr-pair">—</div>
+    <div class="kpi-card__label">Par Más Correlacionado</div>
+    <div class="kpi-card__sub" id="kpi-top-corr-value">Pearson r = —</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-card__icon">🏷️</div>
+    <div class="kpi-card__value kpi-card__value--split" id="kpi-categories">
+      <span class="kpi-badge kpi-badge--conservative" id="kpi-conservative-count">—</span>
+      <span class="kpi-badge kpi-badge--moderate"     id="kpi-moderate-count">—</span>
+      <span class="kpi-badge kpi-badge--aggressive"   id="kpi-aggressive-count">—</span>
+    </div>
+    <div class="kpi-card__label">Clasificación de Riesgo</div>
+    <div class="kpi-card__sub">Cons · Mod · Agres</div>
+  </div>
+</div>
+
+<!-- ── Cuerpo del dashboard ─────────────────────────────────────── -->
+<div class="dash-body">
+
+  <!-- Heatmap mini -->
+  <div class="card dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Correlación de Pearson</h2>
+      <a href="{{ url_for('visualization.heatmap_view') }}" class="btn btn--ghost btn--sm">
+        Ver completo →
+      </a>
+    </div>
+
+    <div id="dash-heatmap-loading" class="loading-msg">
+      <span class="spinner"></span> Calculando correlaciones…
+    </div>
+    <div id="dash-heatmap-error" class="alert alert--error" style="display:none;"></div>
+    <div id="dash-heatmap" style="min-height:400px;"></div>
+  </div>
+
+  <!-- Mini ranking -->
+  <div class="card dash-card">
+    <div class="dash-card__header">
+      <h2 class="dash-card__title">Ranking de Volatilidad</h2>
+      <a href="{{ url_for('analytics.analytics_view') }}" class="btn btn--ghost btn--sm">
+        Ver completo →
+      </a>
+    </div>
+
+    <div id="dash-ranking-loading" class="loading-msg" style="display:none;">
+      <span class="spinner"></span>
+    </div>
+    <div id="dash-ranking-error" class="alert alert--error" style="display:none;"></div>
+
+    <table class="data-table" id="dash-ranking-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ticker</th>
+          <th class="text-right">Vol. Anualizada</th>
+          <th>Riesgo</th>
+        </tr>
+      </thead>
+      <tbody id="dash-ranking-tbody"></tbody>
+    </table>
+
+    <!-- Accesos rápidos al pie de la tabla -->
+    <div class="quick-links">
+      <a href="{{ url_for('similarity.similarity_view') }}" class="quick-link">
+        <span class="quick-link__icon">📐</span>
+        Similitud
+      </a>
+      <a href="{{ url_for('patterns.patterns_view') }}" class="quick-link">
+        <span class="quick-link__icon">🔍</span>
+        Patrones
+      </a>
+      <a href="{{ url_for('visualization.candlestick_view') }}" class="quick-link">
+        <span class="quick-link__icon">📈</span>
+        Candlestick
+      </a>
+      <a href="{{ url_for('dataset.dataset_view') }}" class="quick-link">
+        <span class="quick-link__icon">🗄️</span>
+        Dataset
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

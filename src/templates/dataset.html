@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}Dataset{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-header__title">Dataset Maestro</h1>
+  <p class="page-header__desc">
+    Precios OHLCV históricos de 20 activos financieros — 5 años de datos.
+  </p>
+</div>
+
+<!-- ─── FILTROS ───────────────────────────────────────────────────── -->
+<div class="card filter-card">
+  <div class="filter-row">
+    <div class="form-group">
+      <label class="form-label" for="ticker-select">Activo</label>
+      <select class="form-control" id="ticker-select">
+        <option value="">— Todos —</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="per-page-select">Filas por página</label>
+      <select class="form-control" id="per-page-select">
+        <option value="25">25</option>
+        <option value="50" selected>50</option>
+        <option value="100">100</option>
+      </select>
+    </div>
+    <div class="form-group form-group--align-end">
+      <button class="btn btn--primary" id="btn-filter">Filtrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TABLA ─────────────────────────────────────────────────────── -->
+<div class="card">
+  <div id="dataset-status" class="loading-msg" style="display:none;">
+    <span class="spinner"></span> Cargando datos…
+  </div>
+  <div id="dataset-error" class="alert alert--error" style="display:none;"></div>
+
+  <div class="table-wrapper" id="dataset-table-wrapper">
+    <table class="data-table" id="dataset-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Ticker</th>
+          <th>Tipo</th>
+          <th class="text-right">Apertura</th>
+          <th class="text-right">Máximo</th>
+          <th class="text-right">Mínimo</th>
+          <th class="text-right">Cierre</th>
+          <th class="text-right">Volumen</th>
+        </tr>
+      </thead>
+      <tbody id="dataset-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Paginación -->
+  <div class="pagination" id="pagination">
+    <button class="btn btn--ghost btn--sm" id="btn-prev" disabled>← Anterior</button>
+    <span class="pagination__info" id="page-info">Página 1 de 1</span>
+    <button class="btn btn--ghost btn--sm" id="btn-next" disabled>Siguiente →</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dataset.js') }}"></script>
+{% endblock %}

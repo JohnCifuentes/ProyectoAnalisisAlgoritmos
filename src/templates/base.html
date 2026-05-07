@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Financial Analytics{% endblock %} | UQ</title>
+
+  <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+
+  {% block head %}
+  <!-- Espacio para scripts adicionales (Plotly CDN, etc. — Req #5) -->
+  {% endblock %}
+</head>
+<body>
+
+  <!-- ═══════════════════════  NAVBAR  ════════════════════════════════ -->
+  <nav class="navbar">
+    <div class="navbar__inner">
+      <a href="{{ url_for('home.index') }}" class="navbar__brand">
+        <span class="navbar__logo">📈</span>
+        <span class="navbar__name">FinAnalytics</span>
+      </a>
+
+      <ul class="navbar__links">
+        <li>
+          <a href="{{ url_for('home.index') }}"
+             class="navbar__link {% if request.endpoint == 'home.index' %}navbar__link--active{% endif %}">
+            Inicio
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('dashboard.dashboard_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('dashboard.') %}navbar__link--active{% endif %}">
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('dataset.dataset_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('dataset.') %}navbar__link--active{% endif %}">
+            Dataset
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('similarity.similarity_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('similarity.') %}navbar__link--active{% endif %}">
+            Similitud
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('analytics.analytics_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('analytics.') %}navbar__link--active{% endif %}">
+            Analytics
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('patterns.patterns_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('patterns.') %}navbar__link--active{% endif %}">
+            Patrones
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('visualization.heatmap_view') }}"
+             class="navbar__link {% if request.endpoint and request.endpoint.startswith('visualization.') %}navbar__link--active{% endif %}">
+            Visualizaciones
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════  CONTENIDO  ═════════════════════════════ -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ═══════════════════════  FOOTER  ════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <span class="footer__text">
+        Análisis de Algoritmos · Universidad del Quindío · 2026
+      </span>
+    </div>
+  </footer>
+
+  <!-- Scripts globales -->
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

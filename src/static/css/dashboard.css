@@ -1,0 +1,357 @@
+/* ================================================================
+   dashboard.css — estilos específicos del dashboard y visualizaciones
+   Complementa styles.css (variables y componentes base)
+   ================================================================ */
+
+/* ── KPI Grid ─────────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.kpi-card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.kpi-card:hover {
+  border-color: var(--color-accent);
+}
+
+.kpi-card--aggressive {
+  border-left: 3px solid #f85149;
+}
+
+.kpi-card--conservative {
+  border-left: 3px solid #3fb950;
+}
+
+.kpi-card--accent {
+  border-left: 3px solid var(--color-accent);
+}
+
+.kpi-card__icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.kpi-card__value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-text-strong, #f0f6fc);
+  line-height: 1.2;
+  margin-bottom: 0.25rem;
+}
+
+.kpi-card__value--split {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 1rem;
+}
+
+.kpi-card__label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #8b949e);
+  margin-bottom: 0.2rem;
+}
+
+.kpi-card__sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #8b949e);
+}
+
+/* Badges dentro de la KPI card de categorías */
+.kpi-badge {
+  display: inline-block;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.kpi-badge--conservative { background: rgba(63,185,80,.15);  color: #3fb950; }
+.kpi-badge--moderate     { background: rgba(210,153,34,.15); color: #d29922; }
+.kpi-badge--aggressive   { background: rgba(248,81,73,.15);  color: #f85149; }
+
+/* ── Dashboard Body ───────────────────────────────────────────── */
+.dash-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .dash-body { grid-template-columns: 1fr; }
+}
+
+.dash-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.dash-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-strong, #f0f6fc);
+  margin: 0;
+}
+
+/* ── Quick links al pie del ranking mini ──────────────────────── */
+.quick-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.quick-link {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
+  background: var(--color-bg-tertiary, #21262d);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: var(--color-text, #c9d1d9);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.quick-link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.quick-link__icon { font-size: 1rem; }
+
+/* ── Feature cards ────────────────────────────────────────────── */
+.feature-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: border-color 0.2s, transform 0.1s;
+}
+
+.feature-card:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.feature-card__icon {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.feature-card__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-strong, #f0f6fc);
+  margin: 0 0 0.5rem;
+}
+
+.feature-card__desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted, #8b949e);
+  margin: 0 0 1rem;
+  flex: 1;
+  line-height: 1.5;
+}
+
+.feature-card__link {
+  font-size: 0.8rem;
+  color: var(--color-accent);
+  font-weight: 600;
+}
+
+/* ── Controls row (candlestick) ────────────────────────────────── */
+.controls-card {
+  margin-bottom: 1rem;
+}
+
+.controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: flex-end;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.control-group--action {
+  justify-content: flex-end;
+}
+
+.control-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #8b949e);
+}
+
+.btn-group {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.period-btn--active {
+  background: var(--color-accent) !important;
+  border-color: var(--color-accent) !important;
+  color: #fff !important;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-text, #c9d1d9);
+}
+
+.checkbox-label--sma20  { color: #f1c40f; }
+.checkbox-label--sma50  { color: #e67e22; }
+.checkbox-label--sma100 { color: #9b59b6; }
+.checkbox-label--sma200 { color: #3498db; }
+
+/* ── Stats grid (candlestick) ──────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #8b949e);
+}
+
+.stat-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-text-strong, #f0f6fc);
+}
+
+.stat-sub {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #8b949e);
+}
+
+.stat-value--accent { color: var(--color-accent); }
+.stat-value--green  { color: #3fb950; }
+.stat-value--red    { color: #f85149; }
+
+/* ── SMA current values ────────────────────────────────────────── */
+.sma-values {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sma-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  background: var(--color-bg-tertiary, #21262d);
+  border-radius: 6px;
+}
+
+.sma-item__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.sma-item__value {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sma-item--20  .sma-item__label,
+.sma-item--20  .sma-item__value  { color: #f1c40f; }
+.sma-item--50  .sma-item__label,
+.sma-item--50  .sma-item__value  { color: #e67e22; }
+.sma-item--100 .sma-item__label,
+.sma-item--100 .sma-item__value  { color: #9b59b6; }
+.sma-item--200 .sma-item__label,
+.sma-item--200 .sma-item__value  { color: #3498db; }
+
+/* ── Loading y error (heatmap/candlestick) ─────────────────────── */
+.loading-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem;
+  color: var(--color-text-muted, #8b949e);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.card--full {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* ── Two-col layout (override para gap más pequeño en dash) ─────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .two-col { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr; }
+  .controls-row { flex-direction: column; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+}

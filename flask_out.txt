@@ -1,0 +1,20 @@
+2026-05-07 10:40:30 | INFO     | root                           | Logging inicializado. Archivo de log: C:\Users\johnc\Documents\Analisis de algoritmos\Proyecto\03 Proyecto\logs\etl_20260507_104030.log
+2026-05-07 10:40:30 | INFO     | __main__                       | =================================================================
+2026-05-07 10:40:30 | INFO     | __main__                       |   ANÁLISIS DE ALGORITMOS — PROYECTO FINANCIERO
+2026-05-07 10:40:30 | INFO     | __main__                       |   Universidad del Quindío  |  Servidor Web
+2026-05-07 10:40:30 | INFO     | __main__                       | =================================================================
+2026-05-07 10:40:30 | INFO     | src.similarity.similarity_service | Inicializando SimilarityService...
+2026-05-07 10:40:30 | INFO     | src.similarity.similarity_service | Dataset maestro cargado: 25,120 registros, 20 activos disponibles
+2026-05-07 10:40:30 | INFO     | src.api.services.similarity_service | SimilarityWebService listo. Tickers disponibles: 20
+2026-05-07 10:40:30 | INFO     | src.api.app                    | Flask app creada. Blueprints: home, dataset, similarity, analytics, patterns
+2026-05-07 10:40:30 | INFO     | __main__                       | Iniciando servidor Flask en http://127.0.0.1:5000
+2026-05-07 10:40:30 | INFO     | __main__                       | Presiona Ctrl+C para detener el servidor.
+ * Serving Flask app 'src.api.app'
+ * Debug mode: on
+2026-05-07 10:40:31 | INFO     | werkzeug                       | [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2026-05-07 10:40:31 | INFO     | werkzeug                       | [33mPress CTRL+C to quit[0m
+2026-05-07 10:41:21 | INFO     | src.api.services.dataset_service | Dataset maestro cargado: 25,120 filas, 20 activos
+2026-05-07 10:41:21 | INFO     | werkzeug                       | 127.0.0.1 - - [07/May/2026 10:41:21] "GET /api/tickers HTTP/1.1" 200 -
+2026-05-07 10:41:29 | INFO     | werkzeug                       | 127.0.0.1 - - [07/May/2026 10:41:29] "GET /api/risk-ranking HTTP/1.1" 200 -
+2026-05-07 10:41:49 | INFO     | werkzeug                       | 127.0.0.1 - - [07/May/2026 10:41:49] "GET /api/patterns HTTP/1.1" 200 -

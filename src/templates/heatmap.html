@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Heatmap de Correlación{% endblock %}
+
+{% block head %}
+<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+{% endblock %}
+
+{% block content %}
+<!-- ── Cabecera ─────────────────────────────────────────────────── -->
+<div class="page-header">
+  <div class="page-header__left">
+    <h1 class="page-header__title">Heatmap de Correlación</h1>
+    <p class="page-header__desc">
+      Correlación de Pearson entre 20 activos — calculada manualmente (Req. #2).
+    </p>
+  </div>
+  <div class="page-header__right">
+    <a href="{{ url_for('visualization.visualizations_view') }}" class="btn btn--ghost">
+      ← Visualizaciones
+    </a>
+  </div>
+</div>
+
+<!-- ── Figura del heatmap ───────────────────────────────────────── -->
+<div class="card card--full">
+  <div id="heatmap-loading" class="loading-msg">
+    <span class="spinner"></span> Calculando matriz de correlación para 20 activos…
+    <br /><small class="text-muted">Este proceso puede tardar unos segundos la primera vez.</small>
+  </div>
+  <div id="heatmap-error" class="alert alert--error" style="display:none;"></div>
+  <div id="heatmap-container" style="min-height:680px;"></div>
+</div>
+
+<!-- ── Pares extremos ───────────────────────────────────────────── -->
+<div class="two-col">
+
+  <div class="card">
+    <h2 class="card__title">Top 5 — Más Correlacionados</h2>
+    <p class="card__desc text-muted">Pares con mayor correlación positiva (r → +1).</p>
+    <table class="data-table" id="heatmap-top-table">
+      <thead>
+        <tr>
+          <th>Par</th>
+          <th class="text-right">r de Pearson</th>
+        </tr>
+      </thead>
+      <tbody id="heatmap-top-tbody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2 class="card__title">Top 5 — Menos Correlacionados</h2>
+    <p class="card__desc text-muted">Pares con correlación más cercana a 0 o negativa.</p>
+    <table class="data-table" id="heatmap-bottom-table">
+      <thead>
+        <tr>
+          <th>Par</th>
+          <th class="text-right">r de Pearson</th>
+        </tr>
+      </thead>
+      <tbody id="heatmap-bottom-tbody"></tbody>
+    </table>
+  </div>
+
+</div>
+
+<!-- ── Explicación algorítmica ──────────────────────────────────── -->
+<div class="two-col">
+
+  <div class="card">
+    <h2 class="card__title">¿Cómo se calcula?</h2>
+    <p class="card__desc">
+      Se usa el algoritmo de Pearson implementado manualmente en
+      <code>src/similarity/pearson_correlation.py</code> (Req. #2).
+    </p>
+    <ul class="feature-list">
+      <li>Se calculan retornos diarios porcentuales (sin <code>pct_change()</code>).</li>
+      <li>Se alinean las fechas comunes entre cada par de activos.</li>
+      <li>Se elimina cualquier par de valores nulos antes del cálculo.</li>
+      <li>Se aplica la fórmula 2-pass: media → desviaciones → covarianza.</li>
+    </ul>
+    <p class="card__desc text-muted">
+      La matriz es simétrica (r<sub>ij</sub> = r<sub>ji</sub>), con diagonal = 1.
+      Se calculan 190 pares únicos para 20 activos.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2 class="card__title">Interpretación</h2>
+    <ul class="feature-list">
+      <li>
+        <span class="badge badge--success">r ≈ +1</span>
+        Los activos se mueven en la misma dirección. Alta diversificación con uno solo.
+      </li>
+      <li>
+        <span class="badge badge--error">r ≈ −1</span>
+        Movimiento opuesto — cobertura natural (hedge).
+      </li>
+      <li>
+        <span class="badge badge--info">r ≈ 0</span>
+        Sin relación lineal — buen candidato para diversificar un portafolio.
+      </li>
+    </ul>
+    <p class="card__desc text-muted">
+      Limitación: Pearson mide únicamente correlación <em>lineal</em>.
+      Relaciones no lineales no son capturadas.
+    </p>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/heatmap.js') }}"></script>
+{% endblock %}

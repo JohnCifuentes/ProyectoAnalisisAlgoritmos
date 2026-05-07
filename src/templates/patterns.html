@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Patrones{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-header__title">Detección de Patrones de Precio</h1>
+  <p class="page-header__desc">
+    Identificación de patrones recurrentes: ganancias consecutivas (3 días)
+    y recuperación tras caídas significativas.
+  </p>
+</div>
+
+<!-- ─── FILTRO ────────────────────────────────────────────────────── -->
+<div class="card filter-card">
+  <div class="filter-row">
+    <div class="form-group">
+      <label class="form-label" for="pattern-ticker-select">Filtrar por activo</label>
+      <select class="form-control" id="pattern-ticker-select">
+        <option value="">— Todos los activos —</option>
+      </select>
+    </div>
+    <div class="form-group form-group--align-end">
+      <button class="btn btn--primary" id="btn-pattern-filter">Filtrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── TABLA DE PATRONES ─────────────────────────────────────────── -->
+<div class="card">
+  <h2 class="card__title">Resultados</h2>
+
+  <div id="patterns-loading" class="loading-msg" style="display:none;">
+    <span class="spinner"></span> Cargando patrones…
+  </div>
+  <div id="patterns-error" class="alert alert--error" style="display:none;"></div>
+
+  <div class="table-wrapper">
+    <table class="data-table" id="patterns-table">
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Tipo</th>
+          <th>Patrón</th>
+          <th>Descripción</th>
+          <th class="text-right">Ocurrencias</th>
+          <th class="text-right">Ventanas totales</th>
+          <th class="text-right">Frecuencia</th>
+        </tr>
+      </thead>
+      <tbody id="patterns-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── PLACEHOLDER PARA REQ #5 ──────────────────────────────────── -->
+<div class="card" id="patterns-chart-container" style="display:none;">
+  <h2 class="card__title">Visualización de Patrones</h2>
+  <p class="text-muted">
+    [Req #5] Gráficas interactivas de patrones con Plotly aparecerán aquí.
+  </p>
+  <div id="plotly-patterns"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/patterns.js') }}"></script>
+{% endblock %}

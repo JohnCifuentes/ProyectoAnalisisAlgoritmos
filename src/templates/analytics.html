@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1 class="page-header__title">Volatilidad &amp; Ranking de Riesgo</h1>
+  <p class="page-header__desc">
+    Volatilidad histórica anualizada y clasificación de riesgo de cada activo.
+  </p>
+</div>
+
+<!-- ─── STAT CARDS (Conservador / Moderado / Agresivo) ───────────── -->
+<div class="stat-cards" id="risk-stat-cards">
+  <div class="card stat-card stat-card--conservative">
+    <div class="stat-card__count" id="count-conservative">—</div>
+    <div class="stat-card__label">Conservador</div>
+    <div class="stat-card__desc">Baja volatilidad</div>
+  </div>
+  <div class="card stat-card stat-card--moderate">
+    <div class="stat-card__count" id="count-moderate">—</div>
+    <div class="stat-card__label">Moderado</div>
+    <div class="stat-card__desc">Volatilidad media</div>
+  </div>
+  <div class="card stat-card stat-card--aggressive">
+    <div class="stat-card__count" id="count-aggressive">—</div>
+    <div class="stat-card__label">Agresivo</div>
+    <div class="stat-card__desc">Alta volatilidad</div>
+  </div>
+</div>
+
+<!-- ─── RANKING TABLE ─────────────────────────────────────────────── -->
+<div class="card">
+  <h2 class="card__title">Ranking por Volatilidad Anualizada</h2>
+
+  <div id="analytics-loading" class="loading-msg" style="display:none;">
+    <span class="spinner"></span> Cargando ranking…
+  </div>
+  <div id="analytics-error" class="alert alert--error" style="display:none;"></div>
+
+  <div class="table-wrapper">
+    <table class="data-table" id="ranking-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ticker</th>
+          <th>Tipo</th>
+          <th class="text-right">Vol. Anualizada</th>
+          <th class="text-right">Vol. Diaria</th>
+          <th>Clasificación</th>
+          <th class="text-right">Observaciones</th>
+          <th>Inicio</th>
+          <th>Fin</th>
+        </tr>
+      </thead>
+      <tbody id="ranking-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ─── PLACEHOLDER PARA REQ #5 ──────────────────────────────────── -->
+<div class="card" id="chart-container" style="display:none;">
+  <h2 class="card__title">Heatmap de Correlaciones</h2>
+  <p class="text-muted">
+    [Req #5] El heatmap interactivo con Plotly aparecerá aquí.
+  </p>
+  <div id="plotly-heatmap"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analytics.js') }}"></script>
+{% endblock %}
