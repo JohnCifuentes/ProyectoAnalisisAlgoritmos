@@ -38,6 +38,11 @@ htmlcov/
 *.swp
 *.swo
 
+# Variables de entorno (NUNCA subir al repositorio)
+.env
+.env.local
+.env.production
+
 # OS
 .DS_Store
 Thumbs.db

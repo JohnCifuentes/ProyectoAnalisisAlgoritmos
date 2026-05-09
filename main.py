@@ -7,8 +7,16 @@ Universidad del Quindío — Ingeniería de Sistemas y Computación
 Asignatura: Análisis de Algoritmos
 
 Uso:
-    python main.py            → Inicia el servidor web Flask
-    python main.py --etl      → Ejecuta el pipeline ETL (descarga y procesa datos)
+    python main.py            → Inicia el servidor web Flask (local)
+    python main.py --etl      → Ejecuta el pipeline ETL
+    gunicorn main:app         → Inicia con Gunicorn (producción / Render)
+
+Compatibilidad:
+  - Gunicorn:  La variable global `app` es importada directamente.
+               Comando: gunicorn main:app
+  - Render:    Lee PORT del entorno (Render lo inyecta automáticamente).
+               Start Command: gunicorn main:app
+  - Local:     python main.py  arranca Flask en modo desarrollo.
 
 Salida esperada (--etl):
     data/raw/{TICKER}.csv              — un archivo por activo (20 total)
@@ -102,7 +110,7 @@ def run_web() -> None:
     app.run(
         host="0.0.0.0",
         port=port,
-        debug=True,
+        debug=False,     # Nunca True en producción (Render/Gunicorn)
         use_reloader=False
     )
 

@@ -2,7 +2,7 @@
 
 **Universidad del Quindío — Ingeniería de Sistemas y Computación**  
 **Asignatura:** Análisis de Algoritmos  
-**Fase 1:** Requerimiento 1 — ETL (Extracción, Transformación y Carga)
+**Requerimientos:** ETL · Similitud · Analytics · Dashboard Visual
 
 ---
 
@@ -153,10 +153,91 @@ pytest tests/ -v
 ├── tests/
 │   └── test_etl.py       ← pruebas unitarias (parser, transformer, loader)
 │
-├── main.py               ← punto de entrada
-├── requirements.txt
+├── main.py               ← punto de entrada (compatible con Gunicorn)
+├── requirements.txt      ← dependencias Python
+├── runtime.txt           ← versión de Python para Render
+├── render.yaml           ← configuración de despliegue en Render
 └── README.md
 ```
+
+---
+
+## Ejecución local (servidor web)
+
+```bash
+# 1. Activar entorno virtual
+# Windows:
+venv\Scripts\activate
+# Linux/macOS:
+source venv/bin/activate
+
+# 2. Instalar dependencias
+pip install -r requirements.txt
+
+# 3. Iniciar servidor Flask
+python main.py
+# → Disponible en http://localhost:5000
+```
+
+## Ejecutar ETL (descarga y procesa los datos)
+
+```bash
+python main.py --etl
+```
+
+Esto descarga y procesa los 20 activos. Debe ejecutarse al menos una vez
+antes de usar el servidor web, ya que todas las vistas dependen del
+archivo `data/processed/master_dataset.csv`.
+
+## Ejecutar con Gunicorn (producción local)
+
+```bash
+gunicorn main:app
+# → Disponible en http://localhost:8000
+```
+
+## Ejecutar pruebas unitarias
+
+```bash
+pytest tests/ -v
+```
+
+---
+
+## Despliegue en Render
+
+### Opción A — render.yaml (recomendado)
+
+El archivo `render.yaml` en la raíz del proyecto configura automáticamente
+el servicio. Solo conecta el repositorio en Render y se detecta automáticamente.
+
+### Opción B — configuración manual en el dashboard de Render
+
+| Campo | Valor |
+|---|---|
+| **Environment** | Python |
+| **Build Command** | `pip install -r requirements.txt` |
+| **Start Command** | `gunicorn main:app` |
+| **Plan** | Free |
+
+### Variables de entorno en Render
+
+| Variable | Descripción | Obligatoria |
+|---|---|---|
+| `SECRET_KEY` | Clave secreta Flask (Render puede generarla automáticamente) | Recomendada |
+| `PORT` | Render la inyecta automáticamente — no configurar manualmente | No |
+
+### Deploy automático desde GitHub
+
+1. Subir el proyecto a un repositorio GitHub.
+2. En Render → **New Web Service** → conectar el repositorio.
+3. Render detecta `render.yaml` y configura el servicio.
+4. Cada `git push` a `main` desencadena un redeploy automático.
+
+> **Nota:** En el plan gratuito de Render el servidor se suspende tras 15 min
+> de inactividad. La primera petición puede tardar ~30 s en reiniciarlo.
+
+---
 
 ---
 
@@ -187,7 +268,10 @@ Si un activo falla durante la descarga, el pipeline continúa con los demás y r
 |----------|---------------|-----|
 | `requests` | 2.31.0 | Peticiones HTTP a la API |
 | `pandas` | 2.0.0 | Construcción y persistencia del dataset |
-| `numpy` | 1.24.0 | Operaciones numéricas (fases siguientes) |
+| `numpy` | 1.24.0 | Operaciones numéricas |
+| `flask` | 3.1.0 | Servidor web y API REST |
+| `gunicorn` | 21.2.0 | Servidor WSGI para producción / Render |
+| `plotly` | 5.0.0 | Visualizaciones interactivas (heatmap, candlestick) |
 | `pytest` | 7.4.0 | Ejecución de pruebas unitarias |
 
 > **No se usa** `yfinance`, `pandas_datareader` ni ninguna librería de trading.

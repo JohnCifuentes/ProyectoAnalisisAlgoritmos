@@ -15,6 +15,7 @@ Uso (desde main.py):
 """
 
 import logging
+import os
 from pathlib import Path
 
 from flask import Flask, jsonify
@@ -49,8 +50,12 @@ def create_app(debug: bool = False) -> Flask:
     )
 
     # ── Configuración ───────────────────────────────────────────────────
-    app.config["SECRET_KEY"]    = "analisis-algoritmos-uq-2026"
-    app.config["DEBUG"]         = debug
+    # SECRET_KEY: en producción (Render) debe setearse como variable de entorno.
+    # Si no está definida, usa el fallback (solo aceptable en desarrollo).
+    app.config["SECRET_KEY"]     = os.environ.get(
+        "SECRET_KEY", "analisis-algoritmos-uq-2026-dev"
+    )
+    app.config["DEBUG"]          = debug
     app.config["JSON_SORT_KEYS"] = False          # Mantener orden de claves
 
     # ── Registrar blueprints ────────────────────────────────────────────
