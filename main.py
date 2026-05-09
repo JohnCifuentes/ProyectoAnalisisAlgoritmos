@@ -7,7 +7,7 @@ Universidad del Quindío — Ingeniería de Sistemas y Computación
 Asignatura: Análisis de Algoritmos
 
 Uso:
-    python main.py            → Inicia el servidor web Flask en http://127.0.0.1:5000
+    python main.py            → Inicia el servidor web Flask
     python main.py --etl      → Ejecuta el pipeline ETL (descarga y procesa datos)
 
 Salida esperada (--etl):
@@ -18,9 +18,18 @@ Salida esperada (--etl):
 """
 
 import logging
+import os
 import sys
 
 from src.utils.logger import setup_logging
+from src.api.app import create_app
+
+
+# ============================================================
+# Instancia global de Flask
+# Necesaria para Gunicorn y Render
+# ============================================================
+app = create_app(debug=False)
 
 
 def run_etl() -> int:
@@ -59,6 +68,7 @@ def run_etl() -> int:
             f"  Activos           : {master['ticker'].nunique()}\n"
             f"  Archivo maestro   : data/processed/master_dataset.csv"
         )
+
         return 0
 
     except KeyboardInterrupt:
@@ -72,7 +82,8 @@ def run_etl() -> int:
 
 def run_web() -> None:
     """
-    Inicia el servidor web Flask en http://127.0.0.1:5000
+    Inicia el servidor web Flask.
+    Compatible con Render y despliegue local.
     """
     setup_logging(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -82,13 +93,18 @@ def run_web() -> None:
     logger.info("  Universidad del Quindío  |  Servidor Web")
     logger.info("=" * 65)
 
-    from src.api.app import create_app
+    # Puerto dinámico para Render
+    port = int(os.environ.get("PORT", 5000))
 
-    app = create_app(debug=True)
-
-    logger.info("Iniciando servidor Flask en http://127.0.0.1:5000")
+    logger.info(f"Iniciando servidor Flask en puerto {port}")
     logger.info("Presiona Ctrl+C para detener el servidor.")
-    app.run(host="127.0.0.1", port=5000, debug=True, use_reloader=False)
+
+    app.run(
+        host="0.0.0.0",
+        port=port,
+        debug=True,
+        use_reloader=False
+    )
 
 
 if __name__ == "__main__":
