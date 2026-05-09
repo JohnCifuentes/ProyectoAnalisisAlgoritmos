@@ -1,11 +1,5 @@
 # Archivos y directorios generados automáticamente
 
-# Datos financieros descargados
-data/raw/*.csv
-data/processed/*.csv
-data/processed/*.parquet
-data/exports/*
-
 # Logs de ejecución
 logs/*.log
 
@@ -37,11 +31,6 @@ htmlcov/
 .idea/
 *.swp
 *.swo
-
-# Variables de entorno (NUNCA subir al repositorio)
-.env
-.env.local
-.env.production
 
 # OS
 .DS_Store

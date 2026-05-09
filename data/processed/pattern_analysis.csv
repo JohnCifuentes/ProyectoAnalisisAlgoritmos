@@ -1,0 +1,41 @@
+ticker,instrument_type,pattern,description,n_occurrences,total_windows,frequency_pct
+AAPL,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,188,1253,15.0
+AAPL,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,10,1254,0.8
+AMZN,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,178,1253,14.21
+AMZN,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,16,1254,1.28
+AVAL,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,89,1253,7.1
+AVAL,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,23,1254,1.83
+BBVA,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,173,1253,13.81
+BBVA,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,15,1254,1.2
+CIB,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,174,1253,13.89
+CIB,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,16,1254,1.28
+EC,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,168,1253,13.41
+EC,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,18,1254,1.44
+EEM,ETF,consecutive_gains_3d,3 días consecutivos al alza,167,1253,13.33
+EEM,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,2,1254,0.16
+GLD,ETF,consecutive_gains_3d,3 días consecutivos al alza,173,1253,13.81
+GLD,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,4,1254,0.32
+GOOGL,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,194,1253,15.48
+GOOGL,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,6,1254,0.48
+IWM,ETF,consecutive_gains_3d,3 días consecutivos al alza,158,1253,12.61
+IWM,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,1,1254,0.08
+JPM,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,209,1253,16.68
+JPM,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,6,1254,0.48
+MSFT,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,173,1253,13.81
+MSFT,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,3,1254,0.24
+NVDA,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,204,1253,16.28
+NVDA,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,49,1254,3.91
+QQQ,ETF,consecutive_gains_3d,3 días consecutivos al alza,219,1253,17.48
+QQQ,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,2,1254,0.16
+SPY,ETF,consecutive_gains_3d,3 días consecutivos al alza,208,1253,16.6
+SPY,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,0,1254,0.0
+TSLA,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,185,1253,14.76
+TSLA,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,69,1254,5.5
+UBER,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,152,1253,12.13
+UBER,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,30,1254,2.39
+VOO,ETF,consecutive_gains_3d,3 días consecutivos al alza,206,1253,16.44
+VOO,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,0,1254,0.0
+XLF,ETF,consecutive_gains_3d,3 días consecutivos al alza,186,1253,14.84
+XLF,ETF,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,2,1254,0.16
+XOM,EQUITY,consecutive_gains_3d,3 días consecutivos al alza,197,1253,15.72
+XOM,EQUITY,drop_and_recovery,Caída ≥3% seguida de recuperación ≥2%,4,1254,0.32
